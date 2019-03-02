@@ -1,4 +1,5 @@
 import java.sql.*;
+import java.time.*;
 
 public class DBConnector {
     private Statement stmt;
@@ -51,17 +52,41 @@ public class DBConnector {
         }
     }
 
-    public void addAccountabilityPartner(int user_id, int partner_id) {
+    public void addAccountabilityPartner(int userID, int partnerID) {
         try {
             conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);
             stmt = conn.createStatement();
             String query = "insert into accountability_partner values (" +
-                              user_id + "," + partner_id + ");";
+                              userID + "," + partnerID + ");";
             int result = stmt.executeUpdate(query);
             conn.close();
         } catch (SQLException se) {
             se.printStackTrace();
         }
+    }
+
+    public void addUserExercise(int userID, String exerciseName, LocalDateTime dt) {
+        String datetime = formatDateTime(dt);
+        try {
+            conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+            stmt = conn.createStatement();
+            String query = "insert into exercise values (" +
+                              userID + "," + "\"" + exerciseName + "\"" +
+                              "," + "\"" + datetime + "\"" + ");";
+            int result = stmt.executeUpdate(query);
+            conn.close();
+        } catch (SQLException se) {
+            se.printStackTrace();
+        }
+    }
+
+    private String formatDateTime(LocalDateTime dt) {
+        // LocalDateTime.now() format is yyyy-mm-ddThh:mi:ss.xxxxxx
+        //   Turns into yyyy-mm-dd hh:mi:ss
+        String datetime = dt.toString();
+        datetime = datetime.substring(0,10) + " "
+                     + datetime.substring(11,19);
+        return datetime;
     }
 
 }
