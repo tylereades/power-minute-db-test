@@ -10,10 +10,15 @@ public class Driver {
         //db.addAccountabilityPartner(2,3);
         //String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
 
-        LocalDateTime dt = LocalDateTime.now();
+        //LocalDateTime dt = LocalDateTime.now();
         //System.out.println(dt.toString().substring(0,19));
 
-        db.addUserExercise(2, "hamstring stretch", dt);
+        //db.addUserExercise(2, "hamstring stretch", dt);
+
+        boolean thing = db.madeWeeklyGoal(2);
+        int numFailed = db.getUserFailedExercisesWeekly(2);
+        System.out.println(numFailed);
+
 
     }
 }
